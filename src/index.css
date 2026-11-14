@@ -1,0 +1,219 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-heading: 'Plus Jakarta Sans', sans-serif;
+    --font-sans: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Dark Mode Tokens (Default) */
+    --bg-page: #070a0b;
+    --bg-mesh-1: rgba(50, 229, 235, 0.12);
+    --bg-mesh-2: rgba(138, 194, 201, 0.10);
+    --bg-mesh-3: rgba(19, 22, 23, 0.95);
+
+    --card-bg: rgba(37, 50, 55, 0.65);
+    --card-border: rgba(92, 107, 115, 0.35);
+    --card-border-hover: rgba(50, 229, 235, 0.5);
+
+    --text-primary: #e0fbfc;
+    --text-secondary: #c2dfe3;
+    --text-muted: #9db4c0;
+    --text-dim: #5c6b73;
+
+    --brand-primary: #32e5eb;
+    --brand-secondary: #8ac2c9;
+    --brand-accent: #11a7ad;
+
+    --btn-primary-gradient: linear-gradient(135deg, #11a7ad 0%, #32e5eb 100%);
+    --btn-primary-text: #070a0b;
+
+    --nav-bg: rgba(7, 10, 11, 0.82);
+    --nav-border: rgba(92, 107, 115, 0.3);
+
+    --custom-cursor-glow: rgba(50, 229, 235, 0.25);
+    --custom-cursor-dot: #32e5eb;
+  }
+
+  /* Bright Mode Tokens (Exact Palette) */
+  html.bright,
+  html[data-theme="bright"],
+  [data-theme="bright"] {
+    --bg-page: #fcfdf2;
+    --bg-mesh-1: rgba(5, 102, 141, 0.10);
+    --bg-mesh-2: rgba(2, 195, 154, 0.12);
+    --bg-mesh-3: rgba(240, 243, 189, 0.25);
+
+    --card-bg: rgba(255, 255, 255, 0.88);
+    --card-border: rgba(185, 233, 252, 0.7);
+    --card-border-hover: rgba(5, 102, 141, 0.5);
+
+    --text-primary: #01151d;
+    --text-secondary: #033e56;
+    --text-muted: #045372;
+    --text-dim: #028090;
+
+    --brand-primary: #05668d;
+    --brand-secondary: #00a896;
+    --brand-accent: #02c39a;
+
+    --btn-primary-gradient: linear-gradient(135deg, #05668d 0%, #00a896 100%);
+    --btn-primary-text: #ffffff;
+
+    --nav-bg: rgba(252, 253, 242, 0.85);
+    --nav-border: rgba(185, 233, 252, 0.8);
+
+    --custom-cursor-glow: rgba(5, 102, 141, 0.2);
+    --custom-cursor-dot: #05668d;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.025em;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--text-dim);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-primary);
+}
+
+/* Glassmorphism Classes dynamically adapting to Bright and Dark */
+.glass-panel {
+  background: var(--card-bg);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card-interactive {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-interactive:hover {
+  transform: translateY(-4px);
+  border-color: var(--card-border-hover);
+  box-shadow: 0 20px 40px -15px rgba(5, 102, 141, 0.2), 0 0 25px rgba(2, 195, 154, 0.1);
+}
+
+/* Dynamic Mesh Backgrounds */
+.mesh-bg {
+  background-color: var(--bg-page);
+  background-image: 
+    radial-gradient(at 10% 20%, var(--bg-mesh-1) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, var(--bg-mesh-2) 0px, transparent 50%),
+    radial-gradient(at 50% 80%, var(--bg-mesh-3) 0px, transparent 60%);
+  transition: background-color 0.35s ease;
+}
+
+/* Animated Gradient Border */
+.animated-gradient-border {
+  position: relative;
+  background: var(--card-bg);
+  border-radius: 1rem;
+}
+.animated-gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary), var(--brand-accent), var(--brand-primary));
+  background-size: 300% 300%;
+  animation: borderRotate 6s ease infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes borderRotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Theme Text Gradients */
+.text-gradient {
+  background: linear-gradient(135deg, var(--text-primary) 20%, var(--text-secondary) 60%, var(--brand-primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-teal {
+  background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom Cursor */
+.custom-cursor {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  z-index: 9999;
+  transition: transform 0.15s ease-out, opacity 0.2s ease-out;
+}
+
+/* Shimmer */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.shimmer-element {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-element::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.08) 20%,
+    rgba(255, 255, 255, 0.18) 60%,
+    rgba(255, 255, 255, 0)
+  );
+  animation: shimmer 2.5s infinite;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
